@@ -13,7 +13,7 @@ function Button({
      ${textColor} ${className}`} {...props}> 
         {children}
     </button>
-  )
+  );
 }
 
 export default Button
