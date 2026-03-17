@@ -1,10 +1,11 @@
-import React from 'react'
+import React , {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import {login as authLogin } from '../store/authSlice'
+import {Login as authLogin } from '../store/authSlice'
 import {Button, Input, Logo} from "./index"
 import { useDispatch } from 'react-redux'
-import authSerivce from ".../appwrite/auth"
+import authSerivce from "../appwrite/auth"
 import {useForm} from "react-hook-form"
+import { useState } from 'react'
 
 function Login() {
     const navigate = useNavigate()
@@ -15,10 +16,9 @@ function Login() {
     const login = async(data) => {
         setError("")
         try {
-            const session = await authSerivce.login(data)
+            const session = await authService.login(data)
             if(session){
-                const userData = await authSerivce.
-                getCurrentUser()
+                const userData = await authSerivce.getCurrentUser()
                 if(userData) dispatch(authLogin(userData));
                 navigate("/")
             }
@@ -40,7 +40,7 @@ function Login() {
                     <Logo width="100%"/>
                   </span>                  
          </div>
-         <h2 className="rtext-center text-2xl font-bold
+         <h2 className="text-center text-2xl font-bold
          leading-tight">sign in to your account</h2>
           <p className="mt-2 text-center text-base text-black/60">
                     Don&apos;t have any account?&nbsp;
@@ -63,8 +63,8 @@ function Login() {
                  {...register("email",{
                     required: true,
                     validate: {
-                        matchPattern: (value) => //.
-                        test(value)    ||
+                        matchPattern: (value) =>  /\S+@\S+\.\S+/.test(value)
+                          ||
                         "Email address must be a valid address"
                     }
                  })}

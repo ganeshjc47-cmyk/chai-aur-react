@@ -1,4 +1,4 @@
-import conf from '../conf/Conf.js';
+import conf from '../Conf/conf';
 import { Client, Account, ID} from "appwrite";
 
 
@@ -8,8 +8,8 @@ export class AuthService {
 
     constructor () {
         this.client
-            .setEndpoint(conf.appwriteUrl)
-            .setProject(conf.appwriteProjectId);
+            .setEndpoint("https://sgp.cloud.appwrite.io/v1")
+            .setProject("69a2c0100010a6a9e14c");
         this.account  = new Account(this.client);    
 
     }
@@ -30,27 +30,29 @@ export class AuthService {
 
     async login({email, password}) {
         try {
-             return await this.account.createSession(email, password);
+             return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
             throw error;
         }
     }
 
-   async getCurrentUser() {
-        try {
-            return await this.account.get();
-        } catch (error) {
-            console.log("Appwrite service :: getCurrentuser :: error", error);
-        }
-         
-        return null;
-   }
+ async getCurrentUser() {
+    try {
+        return await this.account.get();
+    } catch (error) {
+       console.log("Appwrite serive :: getCurrentUser :: error", error);
+    }
+     return null;
+}
+
+
+   
 
    async logout () {
     try {
         await this.account.deleteSessions();
     } catch (error) {
-         console.log("Appwrite service :: logout :: error", error);
+         console.log("Appwrite serive :: logout :: error", error);
     }
    }
 }
